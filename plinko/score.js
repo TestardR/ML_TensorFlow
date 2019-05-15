@@ -11,12 +11,9 @@ function runAnalysis() {
   const k = 10;
 
   _.range(0, 3).forEach(feature => {
-    // feature === 0, feature === 1, feature === 2
     const data = _.map(outputs, row => [row[feature], _.last(row)]);
-    const [testSet, trainingSet] = splitDataset(
-      minMax(outputs, 1),
-      testSetSize
-    );
+    const [testSet, trainingSet] = splitDataset(minMax(data, 1), testSetSize);
+
     const accuracy = _.chain(testSet)
       .filter(
         testPoint =>
@@ -26,7 +23,7 @@ function runAnalysis() {
       .divide(testSetSize)
       .value();
 
-    console.log('For feature of', feature, 'Accuracy is', accuracy);
+    console.log('For feature of', feature, 'accuracy is', accuracy);
   });
 }
 
